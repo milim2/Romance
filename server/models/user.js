@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const SALT_I = 10;
 
+// encrypt the password
+const bcrypt = require('bcrypt');
+const SALT_I = 10; // default value
 
 
 
@@ -63,6 +64,26 @@ userSchema.pre('save', function(next){
     }
     
 })
+
+
+// before adding a user the password should be a hashcode
+//before save run this
+//==> after hashed a password moving forward next...
+userSchema.pre('save', function(next) {
+    var user = this; // user: userSchema's user, not the function
+
+    bcrypt.genSalt(SALT_I, function(err, salt){
+        if(err) return next(err);
+
+        bcrypt.hash(user.password, salt, function(err, hash){
+            if(err) return next(err);
+            user.password = hash;
+            next();
+        })
+    })
+}) 
+
+
 
 
 
