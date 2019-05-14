@@ -10,5 +10,5 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # Process
 
-1. Server Side 
->  Register User - checking with RObo3T and Postman, make a new User model
+> Server Side 
+ 1. Register User - checking with RObo3T and Postman, make a new User model
