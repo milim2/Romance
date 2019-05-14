@@ -9,3 +9,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 + Server : npm install -g nodemon / npm run server
 
 # Process
+
+1. Server Side 
+>  Register User - checking with RObo3T and Postman, make a new User model
