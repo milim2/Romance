@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 // encrypt the password
 const bcrypt = require('bcrypt');
+// == 3
+const jwt =  require('jasonwebtoken');
 const SALT_I = 10; // default value
 
 
@@ -87,6 +89,23 @@ userSchema.pre('save', function(next) {
     }
 }) 
 
+
+// server.js == 2
+userSchema.methods.comparePassword = function(candidatePassword, cb){
+// == 3
+    bcrypt.compare(candidatePassword, this.password, function(err, isMatch){
+        if(err) return cb(err);
+        cb(null, isMatch)
+    })
+}
+
+// ==3
+userSchema.methods.generateToken = function(){
+    var user = this; // inside this
+    var token = jwt.sign()
+
+    // user.id + password _-> then go to env==> secret
+}
 
 
 
