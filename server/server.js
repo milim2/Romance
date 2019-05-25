@@ -37,7 +37,7 @@ app.post('/api/users/register', (req, res)=> {
 })
 
 
-app.post('/api/users/login', (res, req) => {
+app.post('/api/users/login', (req, res) => {
 
     // 1. find email
     User.findOne({'email': req.body.email}, (err, user)=> {
@@ -47,8 +47,11 @@ app.post('/api/users/login', (res, req) => {
             if(!isMatch) return res.json({loginSuccess: false, message: 'Wrong Password'})
         
              // 3. generate a new token
-            user.generateToken(()=> {
-
+            user.generateToken((err, user)=> {
+                if(err) return res.status(400).send(err);
+                res.cookies('w_auth', user.token).status(200).json({
+                    loginSuccess: true
+                })
             })        
         })   
     })   

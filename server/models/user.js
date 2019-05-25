@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 // == 3
 const jwt =  require('jasonwebtoken');
 const SALT_I = 10; // default value
-
+require('dotenv').config();
 
 
 const userSchema = mongoose.Schema({
@@ -102,9 +102,15 @@ userSchema.methods.comparePassword = function(candidatePassword, cb){
 // ==3
 userSchema.methods.generateToken = function(){
     var user = this; // inside this
-    var token = jwt.sign()
+    var token = jwt.sign(user._id.teHexString(), process.env.SECRET);
 
     // user.id + password _-> then go to env==> secret
+
+    user.token = token;
+    user.save(function(cb){
+        if(err) return cb(err);
+        cb(null, user);
+    })
 }
 
 
